@@ -1,5 +1,7 @@
 # colorhash
 
+![Screenshot](compare-test.png)
+
 Features:
 
 * Easy-to-read colorbar representation of file hashcodes
