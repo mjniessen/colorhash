@@ -1,0 +1,34 @@
+[package]
+name = "colorhash"
+version = "0.2.2"
+edition = "2021"
+authors = ["Maurice J Niessen <info@mjniessen.com>"]
+description = "Calculates a hash for a given file and displays a more human-readable colored 'code' for easier comparison."
+documentation = "https://mjniessen.com/colorhash"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.4.11", features = ["cargo", "unicode"] }
+spinoff = "0.8.0"
+colorful = "0.2"
+atty = "0.2.14"
+md4 = "0.10.2"
+md-5 = "0.10"
+blake2 = "0.10.6"
+blake3 = "1.5.0"
+ripemd = "0.1.3"
+sha1 = "0.10"
+sha2 = "0.10"
+sha3 = "0.10"
+tiger = "0.2.1"
+# whirlpool = "0.10.4"
+# skein = "0.1.0"
+# sm3 = "0.4.2"
+
+[profile.release]
+strip = true      # Automatically strip symbols from binary
+debug = false     # No debug info at all
+opt-level = 3     # All optimization (0 for no, 1 for basic, 2 for some, 3 for all, "s" for size, "z" for size & no loop vector)
+lto = true        # Enable link time optimization
+codegen-units = 1 # Maximize size reduction optimization
