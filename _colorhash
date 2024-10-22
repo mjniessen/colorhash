@@ -1,0 +1,108 @@
+#compdef colorhash
+
+#
+# ZSH completion for colorhash
+#
+# Written for / tested with colorhash 0.2.2
+#
+# Copyright   ▘ (c) 2024
+#      ▛▛▌ ▌▛▌▌█▌▛▘▛▘█▌▛▌   ▛▘▛▌▛▛▌
+# -=   ▌▌▌▙▌▌▌▌▙▖▄▌▄▌▙▖▌▌ ▗ ▙▖▙▌▌▌▌   =-
+# Maurice J Niessen <info@mjniessen.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Usage: colorhash [OPTIONS] <FILE>
+#
+# Arguments:
+#   <FILE>
+#
+#
+# Options:
+#       --algorithm <ALGORITHM>
+#           Use <ALGORITHM> for hash calculating
+#
+#           [default: blake3]
+#
+#           Possible values:
+#           - md4:        Designed for 32-bit machines - fast but insecure due to many collisions
+#           - md5:        Designed for 32-bit machines - no longer considered cryptographically secure
+#           - blake2s256:
+#           - blake2b512: Very fast and secure
+#           - blake3:     Very fast and secure [DEFAULT]
+#           - ripemd128:
+#           - ripemd160:
+#           - ripemd256:
+#           - ripemd320:
+#           - sha1:       no longer considered cryptographically secure
+#           - sha2:       Alias for sha256
+#           - sha224:
+#           - sha256:     Not that fast, but secure
+#           - sha384:
+#           - sha512:
+#           - sha512_224:
+#           - sha512_256:
+#           - sha3:       Alias for sha3_256
+#           - sha3_224:
+#           - sha3_256:
+#           - sha3_384:
+#           - sha3_512:
+#           - keccak224:
+#           - keccak256:
+#           - keccak384:
+#           - keccak512:
+#           - tiger:      192 bit - Fast and still secure
+#           - tiger2:     Designed for 64-bit machines - Fast and still secure
+#
+#   -c, --code
+#           Print code in hexadecimal
+#
+#   -q, --quiet
+#           No warnings, hints or any additional information
+#
+#   -h, --help
+#           Print help (see a summary with '-h')
+#
+#   -V, --version
+#           Print version
+
+_colorhash() {
+  args=(
+    '(-c --code)'{-c,--code}'[Print code in hexadecimal]'
+    '(-q --quiet)'{-q,--quiet}'[No warnings, hints or any additional information]'
+    '(-h --help)'{-h,--help}'[Print help]'
+    '(-V --version)'{-V,--version}'[Print version]'
+    '*: :{ _files || compadd cache }'
+  )
+
+   # '(-A --algo)'{-A, --algo}'[algorithm for hash calculation (default blake3)]'
+  case "$state" in
+    algorithm)
+      _values -S, 'algorithm' md4 md5 blake2s256 blake2b512 blake3 ripemd128 ripemd160 ripemd256 ripemd320 sha1 sha2 sha224 sha256 sha384 sha512 sha512_224 sha512_256 sha3 sha3_224 sha3_256 sha3_384 sha3_512 keccak224 keccak256 keccak384 keccak512 tiger tiger2
+      ;;
+    file)
+      _files || compadd cache
+      ;;
+  esac
+  _arguments -S -s $args && ret=0
+}
+
+_colorhash "$@"
+
+# vim:ft=zsh ts=2 sw=2 sts=2 fdm=syntax
